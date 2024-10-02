@@ -38,7 +38,15 @@
 
 ### Решение 1
 
-![]()
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-01.png)
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-02.png)
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-03.png)
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-04.png)
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-05.png)
 
 ------
 
@@ -55,7 +63,13 @@
 
 ### Решение 2
 
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-01.png)
 
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-02.png)
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-03.png)
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-04.png)
 
 ------
 
