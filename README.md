@@ -42,7 +42,7 @@
 
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/22-2_2-01-deployment.png)
 
-Создать PV и PVC для подключения папки на локальной ноде:
+Создал PV и PVC для подключения папки на локальной ноде:
 
 https://github.com/artmur1/22-2.2-K8S/blob/main/file/persistent-volume-claim.yaml
 
