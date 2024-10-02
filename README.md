@@ -38,13 +38,38 @@
 
 ### Решение 1
 
+Создал Deployment приложения, состоящего из контейнеров busybox и multitool - https://github.com/artmur1/22-2.2-K8S/blob/main/file/deployment.yaml:
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/22-2_2-01-deployment.png)
+
+Создать PV и PVC для подключения папки на локальной ноде:
+
+https://github.com/artmur1/22-2.2-K8S/blob/main/file/persistent-volume-claim.yaml
+
+https://github.com/artmur1/22-2.2-K8S/blob/main/file/persistent-volume.yaml
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/22-2_2-01-pv.png)
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/22-2_2-01-pvc.png)
+
+Поднялись: деплоймент, под с контейнерами, Persistent volume Claim и Persistent Volume:
+
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-01.png)
+
+multitool может читать файл, в который busybox пишет каждые пять секунд в общей директории:
 
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-02.png)
 
+Удалил Deployment и PVC. PV поменял статус с Bound на Released. До удаления PV был связан с PVC и Deployment, поэтому статус был Bound. А после удаления Deployment и PVC он уже ни с чем не связан, поэтому статус поменялся на  Released:
+
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-03.png)
 
+Файл сохранился на локальном диске ноды:
+
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-04.png)
+
+Удалил PV, файл также сохранился на локальном диске ноды потому что значение в PV у persistentVolumeReclaimPolicy: Retain - это значит, что после удаления PV ресурсы из внешних
+провайдеров автоматически не удаляются.
 
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-01-05.png)
 
@@ -63,11 +88,27 @@
 
 ### Решение 2
 
+Включил и настроить NFS-сервер на MicroK8S.
+
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-01.png)
+
+NFS-сервер запущен:
 
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-02.png)
 
+Создать Deployment приложения состоящего из multitool - https://github.com/artmur1/22-2.2-K8S/blob/main/file/deployment-multitool.yaml:
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/22-2_2-02-deployment-multi.png)
+
+Создал PVC-NFS - https://github.com/artmur1/22-2.2-K8S/blob/main/file/pvc-nfs.yaml:
+
+![](https://github.com/artmur1/22-2.2-K8S/blob/main/22-2_2-02-pvc-nfs.png)
+
+Поднялись: деплоймент, под, Persistent volume Claim и Persistent Volume:
+
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-03.png)
+
+Подключился к мультитулу и записал данные в файл, а затем прочитал их внутри пода из PV:
 
 ![](https://github.com/artmur1/22-2.2-K8S/blob/main/img/22-2_2-02-04.png)
 
