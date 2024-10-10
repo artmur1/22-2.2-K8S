@@ -1,0 +1,93 @@
+Установка и настройка microk8s
+sudo apt update
+sudo apt install snapd
+sudo snap install microk8s --classic
+sudo usermod -a -G microk8s artem
+mkdir -p ~/.kube
+chmod 0700 ~/.kube
+sudo chown -R artem ~/.kube
+sudo usermod -a -G microk8s artem
+sudo su - $USER
+microk8s status --wait-ready
+microk8s kubectl get nodes
+microk8s kubectl get services
+alias kubectl='microk8s kubectl'
+microk8s kubectl create deployment nginx --image=nginx
+microk8s kubectl get pods
+kubectl get pods
+microk8s status
+microk8s enable dns
+microk8s enable hostpath-storage
+
+Установка и настройка kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+kubectl version --client
+kubectl version --client --output=yaml
+source /usr/share/bash-completion/bash_completion
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo 'alias k=kubectl' >>~/.bashrc
+echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
+source ~/.bashrc
+
+Запуск пода
+nano ~/.kube/config
+nano /var/snap/microk8s/current/certs/csr.conf.template
+sudo microk8s refresh-certs --cert front-proxy-client.crt
+microk8s config
+nano pod-hw.yaml
+chmod +x pod-hw.yaml
+kubectl apply -f pod-hw.yaml
+kubectl get po
+kubectl describe po hello-world
+kubectl port-forward hello-world 31000:8080
+kubectl delete po hello-world
+
+kubectl apply -f pod-netology-web.yaml
+kubectl apply -f ser-netology-web.yaml
+kubectl get svc
+kubectl describe svc netology-svc
+kubectl logs nginx-bf5d5cf98-tlc7q
+kubectl exec -it netology-web -- bash
+kubectl delete svc netology-svc
+kubectl create namespace work
+kubectl apply -f pod-netology-web.yaml --namespace work
+kubectl get po -n work
+kubectl describe po nginx -n work
+kubectl exec -it multitool -- bash - подключиться к мультитул
+kubectl apply -f pod-nginx.yaml --namespace zadanie2
+kubectl apply -f myservice.yaml --namespace zadanie2
+
+deployments
+
+kubectl apply -f deployment.yaml
+kubectl get deployments
+kubectl describe deployments nginx-deployment
+kubectl get replicasets
+kubectl delete deployments nginx
+kubectl delete -f deployment.yaml
+kubectl delete -f myservice.yaml
+kubectl apply -f ingress.yaml
+kubectl get ingress
+kubectl describe ingress my-ingress
+kubectl get pvc
+kubectl get pv
+sudo nano /etc/hosts
+kubectl get configmaps
+kubectl describe configmaps ...
+kubectl get secrets
+
+kubectl exec -it mypod -c nginx -- bash - подключиться к контейнеру nginx
+kubectl exec -it busybox-multitool-6764776f5b-qf9qz -c multitool -- bash
+
+Добавить ноду
+microk8s add-node
+выйдет описание с join
+microk8s join 10.129.0.20:25000/e2125d62e1875e9c510fe5002c1936c2/fa2ee831b485 --worker
+
+kubectl port-forward svc/netology-svc 31000:80
+curl ping 127.0.0.1:31000
+curl 127.0.0.1:31000
+curl -sS http://127.0.0.1:31000 || echo 1
+curl -sS http://127.0.0.1:31000 || echo "Ответ получен!"
